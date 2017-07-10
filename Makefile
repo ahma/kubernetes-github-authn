@@ -1,4 +1,4 @@
-REPO := oursky/kubernetes-github-authn
+REPO := ahma/kubernetes-github-authn
 IMAGE_NAME := $(REPO)
 GO_SRC_PATH := /go/src/github.com/$(REPO)
 PORT := 8080

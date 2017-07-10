@@ -17,7 +17,8 @@ spec:
         scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
       containers:
-      - image: oursky/kubernetes-github-authn
+      - image: ahma/kubernetes-github-authn
+        name: kubernetes-github-authn
         ports:
         - containerPort: 3000
           hostPort: 3000
