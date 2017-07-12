@@ -22,14 +22,19 @@ authenticator on your Kubernetes master using host networking so that the
 apiserver can access the authenticator through the loopback interface.
 
 ```
-kubectl create -f https://github.com/oursky/kubernetes-github-authn/blob/master/manifests/github-authn.yaml
+kubectl create -f https://raw.githubusercontent.com/ahma/kubernetes-github-authn/master/manifests/github-authn.yaml
 ```
 
 Confirm that the authenticator is running:
 
 ```
-kubectl get pod -l k8s-app=github-authn
+kubectl get daemonset -l k8s-app=github-authn --namespace kube-system
 ```
+
+
+
+#    - --authentication-token-webhook-cache-ttl=30m0s
+ #   - --authentication-token-webhook-config-file=/etc/kubernetes/manifests/token-webhook-config.json
 
 Next, configure apiserver to verify bearer token using this authenticator.
 There are two configuration options you need to set:
@@ -60,7 +65,7 @@ access to the project `project1`. First of all, we need to define a new role
 called `admin` which can control all resources.
 
 ```
-kubectl create -f https://github.com/oursky/kubernetes-github-authn/blob/master/manifests/admin-cluster-role.yaml
+kubectl create -f https://raw.githubusercontent.com/ahma/kubernetes-github-authn/master/manifests/admin-cluster-role.yaml
 ```
 
 We need to assign `johndoe` to this `admin` role so that he has control to
