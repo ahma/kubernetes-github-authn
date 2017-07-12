@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    k8s-app: {{ template "name" . }}
+  name: {{ template "name" . }}
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      k8s-app: {{ template "name" . }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "name" . }}
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
+    spec:
+      containers:
+      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        name: {{ template "name" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        {{- if .Values.app.GithubEnterpriseUrl }}
+        - name: GITHUB_ENTERPRISE_URL
+          value: "{{ .Values.app.GithubEnterpriseUrl }}"
+        {{- end }}
+
+        {{- if .Values.app.GithubAuthType }}
+        - name: GITHUB_AUTH_TYPE
+          value: "{{ .Values.app.GithubAuthType }}"
+        {{- end }}
+
+        {{- if .Values.app.GithubOrganisations }}
+        - name: GITHUB_ORGANISATIONS
+          value: "{{ .Values.app.GithubOrganisations }}"
+        {{- end }}
+
+        ports:
+        - containerPort: {{ .Values.app.port }}
+          hostPort: {{ .Values.app.port }}
+          protocol: TCP
+      hostNetwork: true
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      nodeSelector:
+        node-role.kubernetes.io/master: ""
+      restartPolicy: Always

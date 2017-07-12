@@ -1,0 +1,11 @@
+apiVersion: v1
+name: github-authn
+version: 0.0.1
+description: A Helm chart for K8S Github Auth
+keywords:
+- auth
+home: https://github.com/ahma/kubernetes-github-authn
+maintainers:
+- name: Ferenc HERNADI
+  email: ferenc.hernadi@gmail.com
+  

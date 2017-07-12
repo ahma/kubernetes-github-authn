@@ -1,0 +1,14 @@
+# Default values for kubernetes-github-authn
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+image:
+  repository: ahma/kubernetes-github-authn
+  tag: latest
+  pullPolicy: Always
+
+app:
+  # GithubEnterpriseUrl: 
+  # GithubAuthType: 
+  # GithubOrganisations:
+  port: 3000
+
